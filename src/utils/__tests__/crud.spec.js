@@ -4,7 +4,7 @@ import { User } from '../../resources/user/user.model'
 import mongoose from 'mongoose'
 
 describe('crud controllers', () => {
-  describe('getOne', async () => {
+  describe('getOne', () => {
     test('finds by authenticated user and id', async () => {
       expect.assertions(2)
 

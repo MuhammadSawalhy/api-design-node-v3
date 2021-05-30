@@ -24,7 +24,10 @@ const remove = collection =>
     })
   })
 
-beforeEach(async done => {
+
+beforeEach(done => {
+  (async()=>{
+
   const db = cuid()
   function clearDB() {
     return Promise.all(_.map(mongoose.connection.collections, c => remove(c)))
@@ -49,13 +52,21 @@ beforeEach(async done => {
   } else {
     await clearDB()
   }
+  })()
+
   done()
 })
-afterEach(async done => {
-  await mongoose.connection.db.dropDatabase()
-  await mongoose.disconnect()
-  return done()
+
+
+afterEach(done => {
+  mongoose.connection.db.dropDatabase()
+  .then(()=>{
+    return mongoose.disconnect()
+  })
+  done()
 })
+
+
 afterAll(done => {
-  return done()
+  done()
 })
