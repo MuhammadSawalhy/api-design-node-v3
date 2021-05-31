@@ -4,7 +4,7 @@ import { User } from '../../resources/user/user.model'
 import mongoose from 'mongoose'
 
 describe('crud controllers', () => {
-  describe('getOne', async () => {
+  describe('getOne', () => {
     test('finds by authenticated user and id', async () => {
       expect.assertions(2)
 
@@ -49,7 +49,7 @@ describe('crud controllers', () => {
 
       const res = {
         status(status) {
-          expect(status).toBe(400)
+          expect(status).toBe(404)
           return this
         },
         end() {
@@ -96,7 +96,10 @@ describe('crud controllers', () => {
   describe('createOne', () => {
     test('creates a new doc', async () => {
       expect.assertions(2)
+<<<<<<< HEAD
 
+=======
+>>>>>>> lesson-1
       const user = mongoose.Types.ObjectId()
       const body = { name: 'name' }
 
@@ -120,7 +123,10 @@ describe('crud controllers', () => {
 
     test('createdBy should be the authenticated user', async () => {
       expect.assertions(2)
+<<<<<<< HEAD
 
+=======
+>>>>>>> lesson-1
       const user = mongoose.Types.ObjectId()
       const body = { name: 'name' }
 

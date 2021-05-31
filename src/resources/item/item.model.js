@@ -1,35 +1,26 @@
 import mongoose from 'mongoose'
 
-const itemSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      maxlength: 50
-    },
-    status: {
-      type: String,
-      required: true,
-      enum: ['active', 'complete', 'pastdue'],
-      default: 'active'
-    },
-    notes: String,
-    due: Date,
-    createdBy: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'user',
-      required: true
-    },
-    list: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'list',
-      required: true
-    }
+const itemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    "maxlength": 50, "required": true, "trim": true
   },
-  { timestamps: true }
-)
+  status: {
+    type: String,
+    "default": "active", "enum": ["active", "complete", "pastdue"], "required": true
+  },
+  createdBy: {
+    type: mongoose.SchemaTypes.ObjectId,
+    "ref": "user", "required": true
+  },
+  notes: String,
+  due: Date,
+  list: {
+    type: mongoose.SchemaTypes.ObjectId,
+    "ref": "list", "required": true
+  },
+}, { timestamps: true })
 
-itemSchema.index({ list: 1, name: 1 }, { unique: true })
+itemSchema.index({ createdBy: 1, name: 1 }, { unique: true })
 
 export const Item = mongoose.model('item', itemSchema)

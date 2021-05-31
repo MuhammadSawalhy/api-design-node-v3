@@ -15,8 +15,12 @@ app.disable('x-powered-by')
 
 app.use(cors())
 app.use(json())
-app.use(urlencoded({ extended: true }))
+app.use(urlencoded({ extended: false }))
 app.use(morgan('dev'))
+
+app.get('/', (req, res) => {
+  res.send({ message: "Alhamdulilah" })
+})
 
 app.post('/signup', signup)
 app.post('/signin', signin)

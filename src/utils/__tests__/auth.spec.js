@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken'
 import config from '../../config'
 import { User } from '../../resources/user/user.model'
 
+let __counter = 0;
+
 describe('Authentication:', () => {
   describe('newToken', () => {
     test('creates new jwt from user', () => {
@@ -45,7 +47,7 @@ describe('Authentication:', () => {
     test('creates user and and sends new token from user', async () => {
       expect.assertions(2)
 
-      const req = { body: { email: 'hello@hello.com', password: '293jssh' } }
+      const req = { body: { email: `hello@${Date.now()+__counter++}.com`, password: '293jssh' } }
       const res = {
         status(status) {
           expect(status).toBe(201)
@@ -56,7 +58,7 @@ describe('Authentication:', () => {
           user = await User.findById(user.id)
             .lean()
             .exec()
-          expect(user.email).toBe('hello@hello.com')
+          expect(user.email).toBe(req.body.email)
         }
       }
 
@@ -85,7 +87,7 @@ describe('Authentication:', () => {
     test('user must be real', async () => {
       expect.assertions(2)
 
-      const req = { body: { email: 'hello@hello.com', password: '293jssh' } }
+      const req = { body: { email: `hello@${Date.now()+__counter++}.com`, password: '293jssh' } }
       const res = {
         status(status) {
           expect(status).toBe(401)
@@ -103,11 +105,11 @@ describe('Authentication:', () => {
       expect.assertions(2)
 
       await User.create({
-        email: 'hello@me.com',
+        email: `hello@${Date.now()+__counter++}.com`,
         password: 'yoyoyo'
       })
 
-      const req = { body: { email: 'hello@me.com', password: 'wrong' } }
+      const req = { body: { email: `hello@${Date.now()+__counter++}.com`, password: 'wrong' } }
       const res = {
         status(status) {
           expect(status).toBe(401)
@@ -124,7 +126,7 @@ describe('Authentication:', () => {
     test('creates new token', async () => {
       expect.assertions(2)
       const fields = {
-        email: 'hello@me.com',
+        email: `hello@${Date.now()+__counter++}.com`,
         password: 'yoyoyo'
       }
       const savedUser = await User.create(fields)
@@ -202,7 +204,7 @@ describe('Authentication:', () => {
 
     test('finds user form token and passes on', async () => {
       const user = await User.create({
-        email: 'hello@hello.com',
+        email: `hello@${Date.now()+__counter++}.com`,
         password: '1234'
       })
       const token = `Bearer ${newToken(user)}`
