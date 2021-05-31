@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "make all",
-    "dev": "nodemon -x make",
-    "test": "cross-env NODE_ENV=testing jest --forceExit --detectOpenHandles  --silent",
+    "build": "yarn babel ./src --out-dir ./dist",
+    "dev": "nodemon -x 'yarn build && yarn start'",
+    "test": "cross-env NODE_ENV=testing jest --forceExit --detectOpenHandles  --silent --runInBand",
     "test-routes": "yarn test -t router",
     "test-models": "yarn test -t model",
     "test-controllers": "yarn test -t controllers",
